@@ -250,7 +250,7 @@ jobs:
             -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
             -DCMAKE_BUILD_TYPE=Release \
             -DLauncher_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json \
-            -DCMAKE_INSTALL_PREFIX:PATH="/Users/runner/work/UltimMC/build/dist" \
+            -DCMAKE_INSTALL_PREFIX:PATH="$GITHUB_WORKSPACE/build/dist" \
             -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)/lib/cmake" \
             -DQt5_DIR="$(brew --prefix qt@5)" \
             -DLauncher_UPDATER_BASE=https://files.multimc.org/update/ \
@@ -259,7 +259,7 @@ jobs:
             -DLauncher_LAYOUT=mac-bundle \
             -DLauncher_BUILD_PLATFORM=osx64-5.15.2 \
             -DLauncher_BUG_TRACKER_URL=https://github.com/UltimMC/Launcher/issues \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
             -DLauncher_EMBED_SECRETS=On \
             $GITHUB_WORKSPACE
 
@@ -272,16 +272,16 @@ jobs:
         run: |
           cd build
           make test
-          cmake -E remove_directory "/Users/runner/work/UltimMC/build/dist"
+          cmake -E remove_directory "$GITHUB_WORKSPACE/build/dist"
 
       - name: Install
         run: |
           cd build
           make install
-          chmod +x /Users/runner/work/UltimMC/build/dist/UltimMC.app/Contents/MacOS/UltimMC
+          chmod +x "$GITHUB_WORKSPACE/build/dist/UltimMC.app/Contents/MacOS/UltimMC"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:
-          name: mmc-cracked-osx64
-          path: /Users/runner/work/UltimMC/build/dist
+          name: mmc-cracked-osx-arm64
+          path: build/dist
