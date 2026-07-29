@@ -240,6 +240,12 @@ jobs:
           brew cleanup
           brew install qt@5
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       - name: Build
         run: |
           mkdir build
